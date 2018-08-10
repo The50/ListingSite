@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h1>{{ listing.title }}</h1>
+    </div>
+    <hr>
+    <div class="list-group">
+        <div href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{ listing.title }}</h5>
+                <small class="text-muted">{{ listing.time|date("m/d/Y H:i") }}</small>
+            </div>
+            <p class="mb-1">{{ listing.text }}</p>
+            <small class="text-muted">Created by: {{ listing.user.username }}</small>
+        </div>
+    </div>
+    <hr>
+
+    {% if is_granted('ROLE_USER') %}
+        {% if app.user.id == listing.user.id %}
+            <a href="{{ path('listing_edit', {'id': listing.id}) }}" class="btn btn-primary" role="button">Edit listing</a>
+            <a href="{{ path('listing_delete', {'id': listing.id}) }}" class="btn btn-warning" role="button">Delete listing</a>
+        {% endif %}
+    {% endif %}
+{% endblock %}

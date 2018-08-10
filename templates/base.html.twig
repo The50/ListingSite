@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Listing site!{% endblock %}</title>
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('css/bootstrap-grid.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('css/bootstrap-reboot.min.css') }}">
+            <link rel="stylesheet"
+                  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        {% endblock %}    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="{{ path('listing_index') }}">Listing site</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item {{ app.request.get('_route') == 'listing_index' ? 'active' }}">
+                        <a class="nav-link" href="{{ path('listing_index') }}">Listings <span class="sr-only"></span></a>
+                    </li>
+                    {% if is_granted('ROLE_USER') %}
+                        <li class="nav-item {{ app.request.get('_route') == 'listing_add' ? 'active' }}">
+                            <a class="nav-link" href="{{ path('listing_add') }}">Add listing</a>
+                        </li>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_USER') == 0 %}
+                        <li class="nav-item {{ app.request.get('_route') == 'security_login' ? 'active' }}">
+                            <a class="nav-link" href="{{ path('security_login') }}">Login</a>
+                        </li>
+                        <li class="nav-item {{ app.request.get('_route') == 'user_register' ? 'active' }}">
+                            <a class="nav-link" href="{{ path('user_register') }}">Register</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item {{ app.request.get('_route') == 'listings_user' ? 'active' }}">
+                            <a class="nav-link" href="{{ path('listings_user') }}">My listings</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ logout_path() }}">Logout {{ app.user.username }}</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+        <br>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    {% block body %}{% endblock %}
+                </div>
+            </div>
+        </div>
+        <hr>
+        {% block javascripts %}
+            <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+            <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+        {% endblock %}
+    </body>
+</html>
