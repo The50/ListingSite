@@ -65,7 +65,8 @@ class ListingController
     /**
      * @Route("/", name="listing_index")
      */
-    public function index() {
+    public function index()
+    {
         $html = $this->twig->render(
             'listing/index.html.twig',
             [
@@ -83,7 +84,8 @@ class ListingController
     /**
      * @Route("/add", name="listing_add")
      */
-    public function add(Request $request, TokenStorageInterface $tokenStorage) {
+    public function add(Request $request, TokenStorageInterface $tokenStorage)
+    {
         $user = $tokenStorage->getToken()
             ->getUser();
 
@@ -118,7 +120,8 @@ class ListingController
     /**
      * @Route("/listing/{id}", name="listing_inner")
      */
-    public function innerListing($id) {
+    public function innerListing($id)
+    {
         $listing = $this->listingRepository->find($id);
 
         $html = $this->twig->render(
@@ -132,7 +135,8 @@ class ListingController
     /**
      * @Route("/edit/{id}", name="listing_edit")
      */
-    public function editListing($id, Request $request, TokenStorageInterface $tokenStorage) {
+    public function editListing($id, Request $request, TokenStorageInterface $tokenStorage)
+    {
         $listing = $this->listingRepository->find($id);
         $listing->setTime(new \DateTime());
 
@@ -171,7 +175,8 @@ class ListingController
     /**
      * @Route("/delete/{id}", name="listing_delete")
      */
-    public function deleteListing($id, TokenStorageInterface $tokenStorage) {
+    public function deleteListing($id, TokenStorageInterface $tokenStorage)
+    {
         $listing = $this->listingRepository->find($id);
 
         $user = $tokenStorage->getToken()
