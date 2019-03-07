@@ -1,11 +1,10 @@
-# ListingSite
-Mediapark assignment
+# Symfony ListingSite
+Assignment for job interview:
+Create a simple CRUD listing site using Symfony framework.
 
-composer install
+# Installation
+1. composer install
+1. php bin/console doctrine:migrations:diff
+3. php bin/console doctrine:migrations:migrate
 
-php bin/console doctrine:migrations:diff
-
-php bin/console doctrine:migrations:migrate
-
-
-symfony_dev.sql file added to the files list if needed
+symfony_dev.sql file added if needed.
