@@ -34,7 +34,7 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
 
 RUN docker-php-ext-install pdo pdo_mysql
 
-WORKDIR /home/wwwroot/
+WORKDIR /var/www/
 ##</romaricp>##
 
 EXPOSE 9000
