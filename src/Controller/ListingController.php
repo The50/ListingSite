@@ -50,7 +50,7 @@ class ListingController extends AbstractController
      * @param RouterInterface $router
      */
     public function __construct(
-        \Twig_Environment $twig,
+        \Twig\Environment $twig,
         ListingRepository $listingRepository,
         FormFactoryInterface $formFactory,
         EntityManagerInterface $entityManager,
