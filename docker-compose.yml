@@ -32,7 +32,6 @@ services:
         environment:
           - maildev_host=sf4_maildev
         depends_on:
-          - maildev
           - mysql
         links:
           - mysql
@@ -47,9 +46,3 @@ services:
         - 8080:80
       links:
         - mysql
-
-    maildev:
-        image: djfarrelly/maildev
-        container_name: sf4_maildev
-        ports:
-          - 8001:80
