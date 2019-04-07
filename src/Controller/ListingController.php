@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Listing;
 use App\Form\ListingType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\User;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ListingRepository;
@@ -18,7 +19,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 /**
  * @Route("/")
  */
-class ListingController
+class ListingController extends AbstractController
 {
     /**
      * @var \Twig_Environment
