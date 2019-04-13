@@ -10,9 +10,23 @@
                         <small class="text-muted">{{ list.time|date("m/d/Y H:i") }}</small>
                     </div>
                     <p class="mb-1">{{ list.text }}</p>
-                    <small class="text-muted">Created by: {{ list.user.username }}</small>
+
+                    {% if is_granted('ROLE_USER') %}
+                        {% if app.user.id == list.user.id %}
+                            <small class="text-muted">Created by: You</small>
+                        {% else %}
+                            <small class="text-muted">Created by: {{ list.user.username }}</small>
+                        {% endif %}
+                    {% endif %}
                 </a>
+                <small class="d-block text-right mt-3">
+                    {% if app.user.id == list.user.id or is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('listing_edit', {'id': list.id}) }}">Edit</a>
+                        <a href="{{ path('listing_delete', {'id': list.id}) }}">Delete</a>
+                    {% endif %}
+                </small>
             </div>
+            <hr>
         {% endfor %}
     {% endif %}
 {% endblock %}

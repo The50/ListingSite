@@ -159,7 +159,7 @@ class ListingController extends AbstractController
             );
         }
 
-        if ($listing->getUser()->getId() === $user->getId()) {
+        if ($listing->getUser()->getId() === $user->getId() || in_array('ROLE_ADMIN', $user->getRoles())) {
             $html = $this->twig->render(
                 'listing/add.html.twig',
                 ['form' => $form->createView()]
@@ -183,7 +183,7 @@ class ListingController extends AbstractController
         $user = $tokenStorage->getToken()
             ->getUser();
 
-        if ($listing->getUser()->getId() === $user->getId()) {
+        if ($listing->getUser()->getId() === $user->getId() || in_array('ROLE_ADMIN', $user->getRoles())) {
             $this->entityManager->remove($listing);
             $this->entityManager->flush();
         }
