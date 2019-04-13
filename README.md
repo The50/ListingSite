@@ -9,6 +9,7 @@ Registered and signed in users can create and edit their own listing posts.
 1. composer install
 2. php bin/console doctrine:migrations:diff
 3. php bin/console doctrine:migrations:migrate
+4. php bin/console doctrine:fixtures:load
 
 Run 'docker-compose build' and 'docker-compose up' if running on Docker.
 
