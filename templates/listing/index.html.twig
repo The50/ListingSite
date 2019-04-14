@@ -19,12 +19,14 @@
                         {% endif %}
                     {% endif %}
                 </a>
-                <small class="d-block text-right mt-3">
-                    {% if app.user.id == list.user.id or is_granted('ROLE_ADMIN') %}
-                        <a href="{{ path('listing_edit', {'id': list.id}) }}">Edit</a>
-                        <a href="{{ path('listing_delete', {'id': list.id}) }}">Delete</a>
-                    {% endif %}
-                </small>
+                {% if is_granted('ROLE_USER') %}
+                    <small class="d-block text-right mt-3">
+                        {% if app.user.id == list.user.id or is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('listing_edit', {'id': list.id}) }}">Edit</a>
+                            <a href="{{ path('listing_delete', {'id': list.id}) }}">Delete</a>
+                        {% endif %}
+                    </small>
+                {% endif %}
             </div>
             <hr>
         {% endfor %}
