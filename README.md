@@ -1,6 +1,7 @@
 # Symfony ListingSite
 Assignment for job interview:
-Create a simple CRUD listing site using Symfony framework.
+Create a simple CRUD listing site using Symfony framework. 
+Sonata Admin included.
 Dockerized.
 
 Registered and signed in users can create and edit their own listing posts.
