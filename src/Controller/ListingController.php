@@ -15,6 +15,10 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 /**
  * @Route("/")
@@ -43,14 +47,14 @@ class ListingController extends AbstractController
     private $router;
 
     /**
-     * @param \Twig_Environment $twig
-     * @param FormFactoryInterface $formFactory
+     * @param Environment $twig
      * @param ListingRepository $listingRepository
+     * @param FormFactoryInterface $formFactory
      * @param EntityManagerInterface $entityManager
      * @param RouterInterface $router
      */
     public function __construct(
-        \Twig\Environment $twig,
+        Environment $twig,
         ListingRepository $listingRepository,
         FormFactoryInterface $formFactory,
         EntityManagerInterface $entityManager,
@@ -84,6 +88,12 @@ class ListingController extends AbstractController
 
     /**
      * @Route("/add", name="listing_add")
+     * @param Request $request
+     * @param TokenStorageInterface $tokenStorage
+     * @return RedirectResponse|Response
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function add(Request $request, TokenStorageInterface $tokenStorage)
     {
@@ -135,6 +145,13 @@ class ListingController extends AbstractController
 
     /**
      * @Route("/edit/{id}", name="listing_edit")
+     * @param $id
+     * @param Request $request
+     * @param TokenStorageInterface $tokenStorage
+     * @return RedirectResponse|Response
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function editListing($id, Request $request, TokenStorageInterface $tokenStorage)
     {
@@ -175,6 +192,9 @@ class ListingController extends AbstractController
 
     /**
      * @Route("/delete/{id}", name="listing_delete")
+     * @param $id
+     * @param TokenStorageInterface $tokenStorage
+     * @return RedirectResponse
      */
     public function deleteListing($id, TokenStorageInterface $tokenStorage)
     {
@@ -195,6 +215,11 @@ class ListingController extends AbstractController
 
     /**
      * @Route("/my-listings", name="listings_user")
+     * @param TokenStorageInterface $tokenStorage
+     * @return Response
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function userPosts(TokenStorageInterface $tokenStorage)
     {
