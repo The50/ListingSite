@@ -5,6 +5,7 @@ Sonata Admin included.
 Dockerized.
 
 Registered and signed in users can create and edit their own listing posts.
+Admin site is accesed via "/admin".
 
 # Installation
 1. composer install
