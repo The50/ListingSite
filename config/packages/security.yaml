@@ -2,45 +2,52 @@ security:
     access_decision_manager:
         strategy: affirmative
     encoders:
-        App\Entity\User: bcrypt
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+        App\Entity\User: auto
     providers:
         database_users:
             entity: { class: App\Entity\User, property: username }
+        users:
+            id: App\Security\UserProvider
     firewalls:
+        admin:
+            pattern:            /admin(.*)
+            form_login:
+                provider:       users
+                login_path:     admin_login
+                use_forward:    false
+                check_path:     admin_login
+                failure_path:   null
+            logout:
+                path:           admin_logout
+                target:         admin_login
+            anonymous:          true
+            guard:
+                provider: users
+                authenticators:
+                    - App\Security\AdminLoginAuthenticator
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: true
             pattern: ^/
-
-            # activate different ways to authenticate
-
-            #            http_basic: ~
-            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-
             form_login:
+                provider: database_users
                 check_path: security_login
                 login_path: security_login
                 csrf_token_generator: security.csrf.token_manager
                 default_target_path: listing_index
-            #                always_use_default_target_path: false
-            #                use_referer: true
-            #                failure_path:
-            #                username_parameter: _username
-            #                password_parameter: _password
-            #                csrf_parameter: _
             logout:
                 path: security_logout
                 target: listing_index
-            # https://symfony.com/doc/current/security/form_login_setup.html
 
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
     access_control:
-    #         - { path: ^/micro-post, roles: ROLE_USER }
-    # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/logout$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/, role: [ROLE_ADMIN, ROLE_SONATA_ADMIN] }
+        - { path: ^/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
 
     role_hierarchy:
-        ROLE_ADMIN: ROLE_USER
+        ROLE_ADMIN:       [ROLE_USER, ROLE_SONATA_ADMIN]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        SONATA:           [ROLE_SUPER_ADMIN, ROLE_SONATA_PAGE_ADMIN_PAGE_EDIT]
