@@ -3,8 +3,6 @@
 namespace App\DataFixtures;
 
 use App\Entity\Listing;
-//use App\Entity\User;
-//use App\Entity\UserPreferences;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -57,7 +55,6 @@ class AppFixtures extends Fixture
 
     private const LANGUAGES = [
         'en',
-        'fr'
     ];
 
     /**
@@ -79,6 +76,9 @@ class AppFixtures extends Fixture
     private function loadListings(ObjectManager $manager)
     {
         for ($i = 0; $i < 30; $i++) {
+            $date = new \DateTime();
+            $date->modify('-' . rand(0, 10) . ' day');
+
             $listing = new Listing();
             $listing->setText(
                 self::POST_TEXT[rand(0, count(self::POST_TEXT) - 1)]
@@ -86,8 +86,12 @@ class AppFixtures extends Fixture
             $listing->setTitle(
                 'Random title '.rand(0, 1001)
             );
-            $date = new \DateTime();
-            $date->modify('-' . rand(0, 10) . ' day');
+            $listing->setPromoFrom(
+                $date
+            );
+            $listing->setPromoTill(
+                $date
+            );
             $listing->setTime($date);
             $listing->setUser($this->getReference(
                 self::USERS[rand(0, count(self::USERS) - 1)]['username']
@@ -112,17 +116,12 @@ class AppFixtures extends Fixture
                 )
             );
             $user->setRoles($userData['roles']);
-//            $user->setEnabled(true);
 
             $this->addReference(
                 $userData['username'],
                 $user
             );
 
-//            $preferences = new UserPreferences();
-//            $preferences->setLocale(self::LANGUAGES[rand(0, 1)]);
-
-//            $user->setPreferences($preferences);
             $manager->persist($user);
         }
 

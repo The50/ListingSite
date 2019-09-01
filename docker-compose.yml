@@ -8,7 +8,7 @@ services:
         volumes:
           - .docker/config/vhosts:/etc/apache2/sites-enabled
           - .:/var/www/sf4:delegated
-          - /vendor:delegated
+          - .:/var/www/vendor:delegated
         depends_on:
           - php
 

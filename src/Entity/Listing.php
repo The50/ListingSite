@@ -40,6 +40,16 @@ class Listing
     private $time;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $promoFrom;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $promoTill;
+
+    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="lists")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -120,5 +130,37 @@ class Listing
     public function setUser($user)
     {
         $this->user = $user;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPromoFrom()
+    {
+        return $this->promoFrom;
+    }
+
+    /**
+     * @param mixed $promoFrom
+     */
+    public function setPromoFrom($promoFrom): void
+    {
+        $this->promoFrom = $promoFrom;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPromoTill()
+    {
+        return $this->promoTill;
+    }
+
+    /**
+     * @param mixed $promoTill
+     */
+    public function setPromoTill($promoTill): void
+    {
+        $this->promoTill = $promoTill;
     }
 }

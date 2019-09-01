@@ -18,6 +18,12 @@
                             <small class="text-muted">Created by: {{ list.user.username }}</small>
                         {% endif %}
                     {% endif %}
+
+                    {% if promoActive(list.promoFrom, list.promoTill) %}
+                        <div>
+                            <small class="text-muted">Promo till {{ list.promoTill|date("m/d/Y H:i") }}</small>
+                        </div>
+                    {% endif %}
                 </a>
                 {% if is_granted('ROLE_USER') %}
                     <small class="d-block text-right mt-3">

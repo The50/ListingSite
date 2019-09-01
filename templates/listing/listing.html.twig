@@ -13,6 +13,12 @@
             </div>
             <p class="mb-1">{{ listing.text }}</p>
             <small class="text-muted">Created by: {{ listing.user.username }}</small>
+
+            {% if promoActive(listing.promoFrom, listing.promoTill) %}
+                <div>
+                    <small class="text-muted">Promo till {{ listing.promoTill|date("m/d/Y H:i") }}</small>
+                </div>
+            {% endif %}
         </div>
     </div>
     <hr>
