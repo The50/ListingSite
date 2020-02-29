@@ -10,15 +10,15 @@ class Paginator
  
     public function __construct($page, $totalcount, $rpp)
     {
-        $this->rpp=$rpp;
-        $this->page=$page;
+        $this->rpp = $rpp;
+        $this->page = $page;
  
-        $this->totalPages=$this->setTotalPages($totalcount, $rpp);
+        $this->totalPages = $this->setTotalPages($totalcount, $rpp);
     }
  
     private function setTotalPages($totalcount, $rpp = 10)
     {
-        $this->totalPages=ceil($totalcount / $rpp);
+        $this->totalPages = ceil($totalcount / $rpp);
         return $this->totalPages;
     }
  
