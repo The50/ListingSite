@@ -75,7 +75,7 @@ class AppFixtures extends Fixture
 
     private function loadListings(ObjectManager $manager)
     {
-        for ($i = 0; $i < 30; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             $date = new \DateTime();
             $date->modify('-' . rand(0, 10) . ' day');
 
