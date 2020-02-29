@@ -35,7 +35,7 @@ class ListingRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+    public function getAll($limit = null, $offset = null)
     {
         $query = $this->createQueryBuilder('listing');
 

@@ -74,9 +74,7 @@ class ListingController extends AbstractController
     public function index(int $page = 1)
     {
         $itemsPerPage = 10;
-        $data = $this->listingRepository->findBy(
-            [],
-            ['time' => 'DESC'],
+        $data = $this->listingRepository->getAll(
             $itemsPerPage,
             ($page - 1) * $itemsPerPage
         );
