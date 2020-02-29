@@ -25,13 +25,31 @@ class ListingRepository extends ServiceEntityRepository
 
     public function findAllByUsers(Collection $users)
     {
-        $qb = $this->createQueryBuilder('p');
+        $query = $this->createQueryBuilder('p');
 
-        return $qb->select('p')
+        return $query->select('p')
             ->where('p.user IN (:following)')
             ->setParameter('following', $users)
             ->orderBy('p.time', 'DESC')
             ->getQuery()
             ->getResult();
+    }
+
+    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+    {
+        $query = $this->createQueryBuilder('listing');
+
+        $data['listingTotal'] = $query->select('count(listing.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        $data['listingData'] = $query->select('listing')
+            ->orderBy('listing.time', 'DESC')
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
+            ->getQuery()
+            ->getResult();
+
+        return $data;
     }
 }

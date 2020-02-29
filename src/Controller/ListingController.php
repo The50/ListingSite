@@ -19,6 +19,7 @@ use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use Libraries\Paginator;
 
 /**
  * @Route("/")
@@ -68,18 +69,28 @@ class ListingController extends AbstractController
     }
 
     /**
-     * @Route("/", name="listing_index")
+     * @Route("/{page}", name="listing_index", requirements={"page"="\d+"})
      */
-    public function index()
+    public function index(int $page = 1)
     {
+        $itemsPerPage = 10;
+        $data = $this->listingRepository->findBy(
+            [],
+            ['time' => 'DESC'],
+            $itemsPerPage,
+            ($page - 1) * $itemsPerPage
+        );
+
+        $paginator = new Paginator($page, $data['listingTotal'], $itemsPerPage);
+        $pagelist = $paginator->getPagesList();
+
         $html = $this->twig->render(
             'listing/index.html.twig',
             [
-                'lists' => $this->listingRepository->findBy(
-                    [],
-                    ['time' => 'DESC']
-                ),
-                'usersToFollow' => 'test',
+                'lists' => $data['listingData'],
+                'currentPage' => $page,
+                'totalPages' => $paginator->getTotalPages(),
+                'paginator' => $pagelist
             ]
         );
 
